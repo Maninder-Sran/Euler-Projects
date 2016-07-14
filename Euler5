@@ -1,0 +1,33 @@
+public class Euler5 {
+
+	public static void main(String[] args) {
+		int smallMultiple = 0;
+		int answer = 0;
+		
+		for(int i = 20; i < 1000000; i++)
+		{
+			answer = i; 
+			if(multiple(i))
+			{
+				if(answer > smallMultiple)
+				{
+					smallMultiple = answer;
+				}
+			}
+		}
+		System.out.println(smallMultiple);
+	}
+	
+	public static boolean multiple(int num)
+	{
+		for(int i = 1; i <= 20; i++)
+		{
+			if(num % i != 0)
+			{
+				return false; 
+			}
+		}
+		return true;
+		
+	}
+}
