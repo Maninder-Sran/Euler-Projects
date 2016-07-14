@@ -79,7 +79,7 @@ public class CircularPrimes
   	for (int i = 2 ; i <= (int) (Math.sqrt (input)) ; i++)
   	{
   	    if (input % i == 0)
-          return false;
+          	return false;
   	}
   	return true;
   }
