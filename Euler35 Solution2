@@ -1,0 +1,86 @@
+/*******************************************************************/
+/*Name: Maninder Sran                                              */
+/*Date: February 07,2016                                           */
+/*Asgn: CircularPrimes                                             */
+/*Desc: Calculate the number of circular primes under one million  */
+/*******************************************************************/
+
+// The "CircularPrimes" class.
+import java.util.Scanner;
+
+public class CircularPrimes
+{
+    public static void main (String[] args)
+    {
+
+        //Variable Declaration
+        int counter = 0;
+        Scanner input;
+        boolean check, finalCheck;
+
+        System.out.println ("Enter the range of numbers you want to check circular prime for: ");
+        int num = input.nextInt ();
+        //Cycle through the array to check which numbers are circular prime
+        for (int i = 2 ; i <= num ; i++)
+        {
+            check = checkPrime (i); //Will return a boolean value depending on whether
+            //the number is prime or not
+            if (check) //If the number is circular prime then increase counter
+            {
+                finalCheck = circularPrime (i);
+                if (finalCheck)
+                {
+                    counter++;
+                    System.out.print (i + "\t");
+                }
+            }
+        }
+        System.out.println ("\nThere are a total of " + counter + " circular prime");
+    } // main method
+
+
+  public static boolean circularPrime (int input)
+  {
+    	//Variable Decleration
+    	String revNumStr, tempStr, inputStr;
+    	int length;
+    	boolean check = true;
+    	//Converting the inputed number into a string
+    	inputStr = String.valueOf (input);
+    	//Determining the length of the string
+    	length = inputStr.length ();
+    	//Rotating the string for as many digits as there are
+    	for (int i = 1 ; i <= length ; i++)
+    	{
+    	    //Put the first char(first number) in the tempStr variable
+    	    tempStr = Character.toString (inputStr.charAt (0));
+    	    //Then put the string excluding the first char in revNumStr
+    	    revNumStr = inputStr.substring (1);
+    	    //Add the char that was at the front to the end of the string
+    	    revNumStr += tempStr;
+    	    //Equate inputStr to revNumStr for the next iteration
+    	    inputStr = revNumStr;
+    	    //Convert the revNumStr String variable into an integer that can be acted on and store it in input
+    	    input = Integer.parseInt (revNumStr);
+    	    //Check if the rotated number is prime else break out of the loop and return false
+    	    if (!checkPrime (input))
+    	    {
+    		    check = false;
+    		    break;
+    	    } 
+	    }
+	    return check;
+  }
+
+
+  public static boolean checkPrime (int input)
+  {
+  	//Initial check for prime based on divisability
+  	for (int i = 2 ; i <= (int) (Math.sqrt (input)) ; i++)
+  	{
+  	    if (input % i == 0)
+          return false;
+  	}
+  	return true;
+  }
+} // CircularPrimes class
