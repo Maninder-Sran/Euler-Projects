@@ -1,0 +1,87 @@
+/*******************************************************************/
+/*Name: Maninder Sran                                              */
+/*Date: February 07,2016                                           */
+/*Asgn: CircularPrimes                                             */
+/*Desc: Calculate the number of circular primes under one million  */
+/*******************************************************************/
+
+// The "CircularPrimes2" class.
+import java.util.Scanner;
+
+public class CircularPrimes2
+{
+    public static void main (String[] args)
+    {
+
+    	//Variable Declaration
+    	int counter = 0;
+    	Scanner input = new Scanner(System.in);
+    	boolean check, finalCheck;
+    
+    	System.out.println ("Enter the range of numbers you want to check circular prime for: ");
+    	int num = input.nexInt ();
+    	//Cycle through the array to check which numbers are circular prime
+    	for (int i = 2 ; i <= num ; i++)
+    	{
+    	    check = checkPrime (i); //Will return a boolean value depending on whether
+    	    //the number is prime or not
+    	    if (check) //If the number is circular prime then increase counter
+    	    {
+        		finalCheck = circularPrime (i);
+        		if (finalCheck)
+        		{
+        		    counter++;
+        		    System.out.print (i + "\t");
+        		}
+    	    }
+    	}
+    	System.out.println ("\nThere are a total of " + counter + " circular prime");
+    } // main method
+
+
+  public static boolean circularPrime (int input)
+  {
+    	//Variable Decleration
+    	int revNum, d1, d2, copyInput = input, rotateNum = 0, numDigits = 0;
+    	boolean check = true;
+    
+    	//Determining the number of digits for the inputed number
+    	while (copyInput > 0)
+    	{
+    	    copyInput /= 10;
+    	    numDigits++;
+    	}
+    
+    	//While loop that iterates through the different rotations of the number
+    	while (rotateNum != numDigits)
+    	{
+    	    d1 = input / 10; //To find the digits in the number excluding the last
+    	    d2 = input % 10; // To find the last digit in the number
+    
+    	    //Calculating the reverse by moving the last digit to the front
+    	    revNum = (int) (d1 + (d2 * Math.pow (10, numDigits - 1)));
+    
+    	    input = revNum; //Equating input to revNum for the next iteration of the loop
+    
+    	    //Checking whether the current reversed number is prime
+    	    if (!checkPrime (revNum))
+    	    {
+    		return check = false; //If the result of the check is false then return false
+    	    }
+    	    rotateNum++; //Iterate rotateNum as one digit rotation has completed
+    	}
+    	return check; //If all the rotations pass the test then return true for check
+  }
+
+
+  public static boolean checkPrime (int input)
+  {
+  	//Initial check for prime based on divisability
+  	for (int i = 2 ; i <= Math.sqrt (input) ; i++)
+  	{
+  	    if (input % i == 0)
+  		    return false;
+  	}
+  	return true;
+  }
+} // CircularPrimes2 class
