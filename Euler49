@@ -1,0 +1,87 @@
+import java.util.Arrays; 
+
+public class Euler49 {
+	
+	public static void main(String[] args)
+	{
+		int max = 10000;
+		boolean [] nums = new boolean[max];
+		Arrays.fill(nums, true);
+		sievePrimes(nums,max);
+		
+		for(int prime1 = 1000; prime1 < max; prime1++)
+		{
+			if(nums[prime1])
+			{
+				for(int prime2 = prime1+1; prime2 < max; prime2++)
+				{
+					if(nums[prime2])
+					{
+						int prime3 = prime2+(prime2-prime1);
+						if(prime3 < 9999 && nums[prime3])
+						{
+							if(isPerm(prime1,prime2) && isPerm(prime2,prime3))
+							{
+								System.out.println(prime1+" "+prime2+" "+prime3);
+							}
+						}
+					}
+				}	
+			}
+		}
+	}
+	public static void sievePrimes(boolean[]nums,int max)
+	{
+		for(int i = 2; i < (int)(Math.sqrt(max));i++)
+		{
+			if(nums[i])
+			{
+				for(int j = i*i; j < max; j += i)
+				{
+					nums[j] = false;
+				}
+			}
+		}
+	}
+	
+	public static boolean isPerm(int num1,int num2)
+	{
+		char[] set1 = new char[String.valueOf(num1).length()];
+		set1 = String.valueOf(num1).toCharArray();
+		char[] set2 = new char[String.valueOf(num2).length()];
+		set2 = String.valueOf(num2).toCharArray();
+		boolean check = false, usedIndices[] = new boolean[set2.length];
+		Arrays.fill(usedIndices, true);
+		
+		for(int i = 0, n = set1.length; i < n; i++)
+		{
+			for(int j = 0; j < n; j++)
+			{
+				if(usedIndices[j])
+				{	
+					if(set1[i]==set2[j])
+					{
+						check = true;
+						usedIndices[j] = false;
+						break;
+					}
+				}
+			}
+			if(i==n-1)
+			{
+				for(int k = 0, v = usedIndices.length; k < v; k++)
+				{
+					if(usedIndices[k])
+					{
+						check = false;
+					}
+				}
+			}
+			if(!check)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+}
