@@ -1,0 +1,38 @@
+
+public class Euler4 {
+
+	public static void main(String[] args)
+	{
+		int largePalin = 0;
+		
+		for(int i = 100;i <= 999;i++)
+		{
+			for(int j = 100;j <= 999;j++)
+			{
+				int product = i*j;
+				String s = String.valueOf(product);
+				int length = s.length();
+				if(isPalindrome(s,length))
+				{
+					if(product>largePalin)
+					{
+						largePalin = product;
+					}
+				}
+				
+			}
+		}
+		System.out.printf("The largest palindrome made from two 3-digit numbers is %d",largePalin);
+	}
+	public static boolean isPalindrome(String num,int length)
+	{
+		for(int i = 0;i<length/2;i++)
+		{
+			if(num.charAt(i)!=num.charAt(length-1-i))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+}
