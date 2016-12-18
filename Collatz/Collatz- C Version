@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int collatz(long n);
+
+int main(void)
+{
+    int num = 0, length = 0, largest = 0;
+    for(int i = 1; i < 1000000; i++)
+    {
+        length = collatz(i);
+        if(length > largest)
+        {
+            largest = length;
+            num = i;
+        }    
+    }    
+    printf("The length of the collatz starting at %i is %i\n",num,largest);
+}
+
+int collatz(long n)
+{
+    if(n == 1)
+        return 0;
+    else if(n % 2 == 0)
+        return 1 + collatz(n/2);
+    else
+        return 1 + collatz(3 * n + 1);
+}
